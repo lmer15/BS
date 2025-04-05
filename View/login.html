@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Public/CSS/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../Public/Images/back-logo.png" alt="Company Logo">
+        </div>
+
+        <div class="form-container">
+            <!-- Login Form -->
+            <div class="form" id="loginFormContainer">
+                <h2>Welcome Back</h2>
+                <div class="message" id="loginMessage"></div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="text" id="loginEmail" required>
+                        <label for="loginEmail"><i class="fas fa-user"></i> Email or Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" required>
+                        <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                        <i class="fas fa-eye-slash toggle-password" data-input="loginPassword"></i>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="forgot_password.html">Forgot Password?</a>
+                    </div>
+                    <button type="submit">Log In</button>
+                </form>
+                
+                <div class="divider">Or</div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button type="button" onclick="location.href='register.html'" style="background: var(--white); color: var(--primary); border: 1px solid var(--primary);">
+                        Create New Account
+                    </button>
+                </div>
+                
+                <p class="form-footer">Continue without account? <a href="#" id="showGuestForm">Guest Access</a></p>
+            </div>
+
+            <!-- Guest Form -->
+            <div class="form hidden" id="guestFormContainer">
+                <h2>Guest Access</h2>
+                <div class="message" id="guestMessage"></div>
+                <form id="guestForm">
+                    <div class="input-group">
+                        <input type="text" id="guestFirstName" required>
+                        <label for="guestFirstName"><i class="fas fa-user"></i> First Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="guestLastName" required>
+                        <label for="guestLastName"><i class="fas fa-user"></i> Last Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="guestEmail" required>
+                        <label for="guestEmail"><i class="fas fa-envelope"></i> Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="guestBillCode" required>
+                        <label for="guestBillCode"><i class="fa-solid fa-key"></i> Bill Code</label>
+                    </div>
+                    <button type="submit">Continue</button>
+                </form>
+                
+                <p class="form-footer">Already registered? <a href="#" id="showLoginForm">Log In Here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Public/JS/form.js"></script>
+</body>
+</html>

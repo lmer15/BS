@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Splitter Dashboard</title>
+  <link rel="stylesheet" href="../Public/CSS/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <div class="logo">
+        <i class="fas fa-receipt"></i>
+        <h1>BillSplit</h1>
+      </div>
+      <div class="user-controls">
+        <div class="notifications">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </div>
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/40" alt="User" class="profile-pic">
+          <span>You</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="dashboard-content">
+      <!-- Left Sidebar - Groups -->
+      <aside class="groups-sidebar">
+        <div class="sidebar-header">
+          <h3>Groups</h3>
+          <button id="new-group-btn" class="icon-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search groups...">
+        </div>
+        <ul class="group-list" id="group-list">
+          <!-- Groups will be dynamically inserted here -->
+        </ul>
+      </aside>
+
+      <!-- Main Panel - Group Details -->
+      <main class="group-details">
+        <div class="group-header" id="group-header">
+          <h2 id="current-group-name">Select a group</h2>
+          <div class="group-actions">
+            <button id="add-expense-btn" class="btn primary">
+              <i class="fas fa-plus"></i> Add Expense
+            </button>
+            <button id="settle-up-btn" class="btn secondary" disabled>
+              <i class="fas fa-hand-holding-usd"></i> Settle Up
+            </button>
+            <button id="group-settings-btn" class="icon-btn">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Balance Summary -->
+        <div class="balance-summary" id="balance-summary">
+          <div class="total-balance">
+            <h3>Your Balance</h3>
+            <p class="balance-amount neutral">₱0.00</p>
+          </div>
+          <div class="simplified-balances">
+            <h3>Simplified Balances</h3>
+            <ul class="balances-list" id="balances-list">
+              <li class="empty-state">Select a group to see balances</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+          <div class="section-header">
+            <h3>Recent Activity</h3>
+            <div class="activity-filters">
+              <button class="filter-btn active">All</button>
+              <button class="filter-btn">Expenses</button>
+              <button class="filter-btn">Payments</button>
+            </div>
+          </div>
+          <ul class="activity-list" id="activity-list">
+            <li class="empty-state">No activity yet. Add an expense to get started!</li>
+          </ul>
+        </div>
+      </main>
+
+      <!-- Right Sidebar - Group Members -->
+      <aside class="members-sidebar">
+        <div class="sidebar-header">
+          <h3>Members</h3>
+          <button id="add-member-btn" class="icon-btn" disabled>
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <ul class="member-list" id="member-list">
+          <li class="empty-state">Select a group to see members</li>
+        </ul>
+        
+        <!-- Expense Summary Chart -->
+        <div class="expense-summary">
+          <h3>Expense Summary</h3>
+          <div class="chart-container">
+            <canvas id="expense-chart"></canvas>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="new-group-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Create New Group</h2>
+      <form id="new-group-form">
+        <div class="form-group">
+          <label for="group-name">Group Name</label>
+          <input type="text" id="group-name" required>
+        </div>
+        <div class="form-group">
+          <label for="group-currency">Currency</label>
+          <select id="group-currency" required>
+            <option value="PHP">USD (₱)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="INR">INR (₹)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Add Members</label>
+          <div class="member-selection">
+            <input type="text" id="member-search" placeholder="Search friends...">
+            <ul class="member-selection-list" id="available-members">
+              <!-- Available members will appear here -->
+            </ul>
+          </div>
+        </div>
+        <button type="submit" class="btn primary">Create Group</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="expense-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Add New Expense</h2>
+      <form id="expense-form">
+        <div class="form-group">
+          <label for="expense-description">Description</label>
+          <input type="text" id="expense-description" placeholder="What was it for?" required>
+        </div>
+        <div class="form-group">
+          <label for="expense-amount">Amount</label>
+          <input type="number" id="expense-amount" min="0.01" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="expense-payer">Paid by</label>
+          <select id="expense-payer" required>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expense-category">Category</label>
+          <select id="expense-category" required>
+            <option value="food">🍕 Food</option>
+            <option value="transport">🚗 Transport</option>
+            <option value="shopping">🛍️ Shopping</option>
+            <option value="housing">🏠 Housing</option>
+            <option value="entertainment">🎬 Entertainment</option>
+            <option value="other">❓ Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expense-date">Date</label>
+          <input type="date" id="expense-date" required>
+        </div>
+        <div class="form-group">
+          <label>Split Between</label>
+          <div class="split-options">
+            <div class="split-method">
+              <button type="button" class="split-method-btn active" data-method="equal">Equal</button>
+              <button type="button" class="split-method-btn" data-method="percentage">Percentage</button>
+              <button type="button" class="split-method-btn" data-method="custom">Custom</button>
+            </div>
+            <div class="split-details" id="split-details">
+              <!-- Split details will appear here -->
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn primary">Add Expense</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+  <script src="../Public/JS/dashboard.js"></script>
+</body>
+</html>

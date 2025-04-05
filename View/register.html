@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Public/CSS/register.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../Public/Images/back-logo.png" alt="Company Logo">
+        </div>
+
+        <div class="form-container">
+            <div class="form" id="registerFormContainer">
+                <h2>Register</h2>
+                <div class="message" id="registerMessage"></div>
+                <form id="registerForm">
+                    <div class="input-group">
+                        <input type="text" id="registerFirstName" name="first_name" required>
+                        <label for="registerFirstName"><i class="fas fa-user"></i> First Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="registerLastName" name="last_name" required>
+                        <label for="registerLastName"><i class="fas fa-user"></i> Last Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="registerNickname" name="nickname" required>
+                        <label for="registerNickname"><i class="fa-solid fa-file-signature"></i> Nickname (must be unique)</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="registerEmail" name="email" required>
+                        <label for="registerEmail"><i class="fas fa-envelope"></i> Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="registerUsername" name="username" required>
+                        <label for="registerUsername"><i class="fas fa-user-tag"></i> Username (must be unique)</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="registerPassword" name="password" required>
+                        <label for="registerPassword"><i class="fas fa-lock"></i> Password</label>
+                        <i class="fas fa-eye-slash toggle-password" data-input="registerPassword"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="registerConfirmPassword" required>
+                        <label for="registerConfirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+                        <i class="fas fa-eye-slash toggle-password" data-input="registerConfirmPassword"></i>
+                    </div>
+                    <button type="submit">Register</button>
+                </form>
+                <p class="form-footer">Already have an account? <a href="../View/login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Public/JS/form.js"></script>
+</body>
+</html>
