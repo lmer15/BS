@@ -21,11 +21,11 @@
                 <div class="message" id="loginMessage"></div>
                 <form id="loginForm">
                     <div class="input-group">
-                        <input type="text" id="loginEmail" required>
+                        <input type="text" id="loginEmail" name="login" required>
                         <label for="loginEmail"><i class="fas fa-user"></i> Email or Username</label>
                     </div>
                     <div class="input-group">
-                        <input type="password" id="loginPassword" required>
+                        <input type="password" id="loginPassword" name="password" required>
                         <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
                         <i class="fas fa-eye-slash toggle-password" data-input="loginPassword"></i>
                     </div>
@@ -52,19 +52,19 @@
                 <div class="message" id="guestMessage"></div>
                 <form id="guestForm">
                     <div class="input-group">
-                        <input type="text" id="guestFirstName" required>
+                        <input type="text" id="guestFirstName" name="first_name" required>
                         <label for="guestFirstName"><i class="fas fa-user"></i> First Name</label>
                     </div>
                     <div class="input-group">
-                        <input type="text" id="guestLastName" required>
+                        <input type="text" id="guestLastName" name="last_name" required>
                         <label for="guestLastName"><i class="fas fa-user"></i> Last Name</label>
                     </div>
                     <div class="input-group">
-                        <input type="email" id="guestEmail" required>
+                        <input type="email" id="guestEmail" name="email" required>
                         <label for="guestEmail"><i class="fas fa-envelope"></i> Email</label>
                     </div>
                     <div class="input-group">
-                        <input type="text" id="guestBillCode" required>
+                        <input type="text" id="guestBillCode" name="bill_code" required>
                         <label for="guestBillCode"><i class="fa-solid fa-key"></i> Bill Code</label>
                     </div>
                     <button type="submit">Continue</button>

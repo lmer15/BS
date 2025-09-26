@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/Database.php';
+
 class UserModel {
     private PDO $db;
 
@@ -117,12 +119,14 @@ class UserModel {
 
     public function login(string $login, string $password): ?array {
         $stmt = $this->db->prepare(
-            "SELECT id, first_name, last_name, nickname, email, username, account_type 
+            "SELECT id, first_name, last_name, nickname, email, username, password, account_type 
              FROM users 
-             WHERE (username = :login OR email = :login)
-             AND password IS NOT NULL"
+             WHERE (username = :login1 OR email = :login2)"
         );
-        $stmt->execute([':login' => $login]);
+        $stmt->execute([
+            ':login1' => $login,
+            ':login2' => $login
+        ]);
         $user = $stmt->fetch();
         
         if ($user && password_verify($password, $user['password'])) {

@@ -7,7 +7,13 @@ class EmailService {
         $message = $this->buildWelcomeEmail($name);
         $headers = $this->buildEmailHeaders();
         
-        return mail($to, $subject, $message, $headers);
+        // Suppress mail warnings and return false if it fails
+        $originalErrorReporting = error_reporting();
+        error_reporting(0);
+        $result = mail($to, $subject, $message, $headers);
+        error_reporting($originalErrorReporting);
+        
+        return $result;
     }
 
     public function sendPasswordResetEmail(string $to, string $token): bool {
@@ -15,7 +21,13 @@ class EmailService {
         $message = $this->buildResetEmail($token);
         $headers = $this->buildEmailHeaders();
         
-        return mail($to, $subject, $message, $headers);
+        // Suppress mail warnings and return false if it fails
+        $originalErrorReporting = error_reporting();
+        error_reporting(0);
+        $result = mail($to, $subject, $message, $headers);
+        error_reporting($originalErrorReporting);
+        
+        return $result;
     }
 
     private function buildWelcomeEmail(string $name): string {

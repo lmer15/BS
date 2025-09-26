@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     initFormHandlers();
     initPasswordToggle();
+    initFormSwitching();
 });
 
 function initFormHandlers() {
@@ -76,6 +77,7 @@ async function handleFormSubmission(formType) {
         });
 
         const data = await response.json();
+        console.log('Response data:', data);
         
         if (!response.ok) {
             throw new Error(data.message || 'Request failed');
@@ -84,6 +86,7 @@ async function handleFormSubmission(formType) {
         showFeedback(messageElement, data.message, 'success');
         
         if (data.redirect) {
+            console.log('Redirecting to:', data.redirect);
             setTimeout(() => {
                 window.location.href = data.redirect;
             }, 1500);
@@ -116,4 +119,25 @@ function getButtonText(formType) {
         guest: 'Continue'
     };
     return buttonTexts[formType] || 'Submit';
+}
+
+function initFormSwitching() {
+    const showGuestForm = document.getElementById('showGuestForm');
+    const showLoginForm = document.getElementById('showLoginForm');
+    const loginFormContainer = document.getElementById('loginFormContainer');
+    const guestFormContainer = document.getElementById('guestFormContainer');
+
+    if (showGuestForm && showLoginForm && loginFormContainer && guestFormContainer) {
+        showGuestForm.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormContainer.classList.add('hidden');
+            guestFormContainer.classList.remove('hidden');
+        });
+
+        showLoginForm.addEventListener('click', function(e) {
+            e.preventDefault();
+            guestFormContainer.classList.add('hidden');
+            loginFormContainer.classList.remove('hidden');
+        });
+    }
 }

@@ -1,16 +1,14 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../Model/Database.php';
 require_once __DIR__ . '/../Model/UserModel.php';
-require_once __DIR__ . '/../Model/EmailService.php';
 
 class AuthController {
     private UserModel $userModel;
-    private EmailService $emailService;
 
     public function __construct() {
         $this->userModel = new UserModel();
-        $this->emailService = new EmailService();
         session_start();
     }
 
@@ -26,11 +24,7 @@ class AuthController {
                 $input['username'],
                 $input['password']
             )) {
-                $this->emailService->sendWelcomeEmail(
-                    $input['email'],
-                    $input['first_name'] . ' ' . $input['last_name']
-                );
-                $this->sendResponse(true, 'Registration successful! Please check your email.', '../View/login.html');
+                $this->sendResponse(true, 'Registration successful!', 'login.html');
             } else {
                 throw new Exception('Registration failed. Please try again.');
             }
@@ -47,8 +41,8 @@ class AuthController {
             if ($user) {
                 $_SESSION['user'] = $user;
                 $redirect = $user['account_type'] === 'premium' 
-                    ? '../View/premium_dashboard.html' 
-                    : '../View/dashboard.html';
+                    ? 'premium_dashboard.html' 
+                    : 'dashboard.html';
                 $this->sendResponse(true, 'Login successful!', $redirect);
             } else {
                 throw new Exception('Invalid login credentials');
@@ -69,7 +63,7 @@ class AuthController {
                     'email' => $input['email'],
                     'access_type' => 'guest'
                 ];
-                $this->sendResponse(true, 'Guest access granted!', '../View/guest_dashboard.html');
+                $this->sendResponse(true, 'Guest access granted!', 'guest_dashboard.html');
             } else {
                 throw new Exception('Invalid bill code or access has expired');
             }
@@ -134,9 +128,14 @@ class AuthController {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
         
         if (strpos($contentType, 'application/json') !== false) {
-            $input = json_decode(file_get_contents('php://input'), true);
+            $rawInput = file_get_contents('php://input');
+            if (empty($rawInput)) {
+                throw new Exception('No input data received');
+            }
+            
+            $input = json_decode($rawInput, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new Exception('Invalid JSON input');
+                throw new Exception('Invalid JSON input: ' . json_last_error_msg());
             }
             return $input ?? [];
         }
@@ -158,6 +157,9 @@ class AuthController {
 
 // Main execution
 try {
+    // Ensure we always return JSON
+    header('Content-Type: application/json');
+    
     $controller = new AuthController();
     $action = $_GET['action'] ?? '';
     
@@ -175,11 +177,17 @@ try {
             throw new Exception('Invalid action');
     }
 } catch (Exception $e) {
-    header('Content-Type: application/json');
     http_response_code(400);
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
+    ]);
+    exit;
+} catch (Error $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Internal server error'
     ]);
     exit;
 }

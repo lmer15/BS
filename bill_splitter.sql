@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2025 at 12:06 AM
+-- Generation Time: Sep 26, 2025 at 08:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -37,6 +37,15 @@ CREATE TABLE `bills` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_active` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`id`, `code`, `title`, `description`, `total_amount`, `created_by`, `created_at`, `is_active`) VALUES
+(1, '1A69D91D', 'Workmates', '', 0.00, 7, '2025-09-26 06:29:47', 1),
+(2, '37EBAABA', 'Throuple', '', 0.00, 7, '2025-09-26 06:34:03', 1),
+(3, '797B630F', 'Megan Frazier', '', 0.00, 7, '2025-09-26 06:50:24', 1);
 
 -- --------------------------------------------------------
 
@@ -87,14 +96,23 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `surname` varchar(50) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
   `nickname` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `account_type` enum('standard','premium') DEFAULT 'standard'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `nickname`, `email`, `username`, `password`, `created_at`, `updated_at`, `account_type`) VALUES
+(7, 'Yoshi', 'Combs', 'Mia Haney', 'fejy@mailinator.com', 'pejywufevy', '$2y$12$.PJjavFFNYfO33OHcH3psO88GssvXQfQRE2w4QWpydgDryINRvzlO', '2025-09-26 06:12:41', '2025-09-26 06:12:41', 'standard');
 
 --
 -- Indexes for dumped tables
@@ -135,7 +153,8 @@ ALTER TABLE `password_resets`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nickname` (`nickname`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -145,7 +164,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `bill_participants`
@@ -163,7 +182,7 @@ ALTER TABLE `guest_access`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

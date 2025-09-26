@@ -33,7 +33,7 @@
       <aside class="groups-sidebar">
         <div class="sidebar-header">
           <h3>Groups</h3>
-          <button id="new-group-btn" class="icon-btn">
+          <button id="new-group-btn" class="icon-btn" aria-label="Create new group">
             <i class="fas fa-plus"></i>
           </button>
         </div>
@@ -57,7 +57,7 @@
             <button id="settle-up-btn" class="btn secondary" disabled>
               <i class="fas fa-hand-holding-usd"></i> Settle Up
             </button>
-            <button id="group-settings-btn" class="icon-btn">
+            <button id="group-settings-btn" class="icon-btn" aria-label="Group settings">
               <i class="fas fa-cog"></i>
             </button>
           </div>
@@ -97,7 +97,7 @@
       <aside class="members-sidebar">
         <div class="sidebar-header">
           <h3>Members</h3>
-          <button id="add-member-btn" class="icon-btn" disabled>
+          <button id="add-member-btn" class="icon-btn" disabled aria-label="Add member">
             <i class="fas fa-plus"></i>
           </button>
         </div>
@@ -119,7 +119,7 @@
   <!-- Modals -->
   <div class="modal" id="new-group-modal">
     <div class="modal-content">
-      <span class="close-btn">&times;</span>
+      <span class="close-btn" aria-label="Close modal">&times;</span>
       <h2>Create New Group</h2>
       <form id="new-group-form">
         <div class="form-group">
@@ -129,21 +129,12 @@
         <div class="form-group">
           <label for="group-currency">Currency</label>
           <select id="group-currency" required>
-            <option value="PHP">USD (₱)</option>
+            <option value="PHP">PHP (₱)</option>
             <option value="USD">USD ($)</option>
             <option value="EUR">EUR (€)</option>
             <option value="GBP">GBP (£)</option>
             <option value="INR">INR (₹)</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label>Add Members</label>
-          <div class="member-selection">
-            <input type="text" id="member-search" placeholder="Search friends...">
-            <ul class="member-selection-list" id="available-members">
-              <!-- Available members will appear here -->
-            </ul>
-          </div>
         </div>
         <button type="submit" class="btn primary">Create Group</button>
       </form>
@@ -152,7 +143,7 @@
 
   <div class="modal" id="expense-modal">
     <div class="modal-content">
-      <span class="close-btn">&times;</span>
+      <span class="close-btn" aria-label="Close modal">&times;</span>
       <h2>Add New Expense</h2>
       <form id="expense-form">
         <div class="form-group">
@@ -202,8 +193,10 @@
     </div>
   </div>
 
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="app.js"></script>
   <script src="../Public/JS/dashboard.js"></script>
 </body>
 </html>
